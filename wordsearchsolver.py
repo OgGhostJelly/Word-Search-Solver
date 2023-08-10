@@ -3,28 +3,23 @@ from gridtools import mult_v2_i
 from gridtools import walk_ats
 
 from trietools import list_to_trie
+from trietools import match
 
 from colorama import Fore, Style
 
 
-# Casts a ray and checks for the existance of a word in the given words trie
-# If no word is found return None
+# Looks at a tile facing a direction in a grid and checks if a word is placed there.
 
 def look_for(grid, words, at, direction):
-    # If cell doesn't exist.
-    if not at in grid:
-        return
+    def step():
+        nonlocal at
+        nonlocal grid
 
-    # If not a valid word.
-    if not grid[at] in words:
-        return
-    
-    # If is trie leaf.
-    if "end" in words[grid[at]]:
-        return grid[at]
-    
-    data = look_for(grid, words[grid[at]], add_v2_v2(at, direction), direction)
-    return grid[at] + data if data else None
+        while at in grid:
+            yield grid[at]
+            at = add_v2_v2(at, direction)
+
+    return match(words, step())
 
 
 # Solves a crossword puzzle and returns its solutions in a tuple with this format:
@@ -77,7 +72,7 @@ def solve(grid, _words, is_diagonal = True):
     return matches
 
 
-# Converts a grid and a crossword solution to a string.
+# Converts a grid and a crossword solution to a string, used for debugging.
 
 def sol2str(grid, sol):
     solved_cells = {}
