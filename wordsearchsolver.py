@@ -1,6 +1,6 @@
 from gridtools import add_v2_v2
 from gridtools import mult_v2_i
-from gridtools import walk_ats
+from gridtools import walk_dist
 
 from trietools import list_to_trie
 from trietools import match
@@ -77,7 +77,7 @@ def solve(grid, _words, is_diagonal = True):
 def sol2str(grid, sol):
     solved_cells = {}
 
-    for at in walk_ats(grid, sol[1], sol[2], len(sol[0])):
+    for at, _ in walk_dist(grid, sol[1], sol[2], len(sol[0])):
         solved_cells[at] = None
 
 

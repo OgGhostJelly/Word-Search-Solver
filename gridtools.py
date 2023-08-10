@@ -23,30 +23,17 @@ def mult_v2_i(a, b):
     return (a[0] * b, a[1] * b)
 
 
-def walk(grid, at, direction, key, should_continue):
-    if not at in grid:
-        return
-    
-    if not should_continue(at):
-        return
-
-    key(at)
-    walk(grid, add_v2_v2(at, direction), direction, key, should_continue)
+def walk(grid, at, direction):
+    i = 0
+    while at in grid:
+        yield at, i
+        at = add_v2_v2(at, direction)
+        i += 1
 
 
-def walk_ats(grid, at, direction, distance):
-    ats = []
-    depth = 0
-
-    def key(at):
-        nonlocal depth
-
-        ats.append(at)
-        depth += 1
-
-    def should_continue(_):
-        return depth < distance
-    
-    walk(grid, at, direction, key, should_continue)
-
-    return ats
+def walk_dist(grid, at, direction, distance):
+    walk_gen = walk(grid, at, direction)
+    for at, i in walk_gen:
+        yield at, i
+        if i >= distance - 1:
+            walk_gen.close()
