@@ -1,7 +1,7 @@
 from gridtools import grid_from_iterable
 
-from crosswordsolver import sol2str
-from crosswordsolver import solve
+from wordsearchsolver import sol2str
+from wordsearchsolver import solve
 
 
 if __name__ == "__main__":
