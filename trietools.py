@@ -3,7 +3,7 @@ def str_to_trie(string, d = None, length = None):
         length = len(string)
     
     if length <= 0:
-        return True
+        return { "isValidWord": True }
     
     if d is None:
         d = {}

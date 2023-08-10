@@ -20,7 +20,7 @@ def look_for(grid, words, at, direction):
         return
     
     # If is trie leaf.
-    if words[grid[at]] is True:
+    if "isValidWord" in words[grid[at]]:
         return grid[at]
     
     data = look_for(grid, words[grid[at]], add_v2_v2(at, direction), direction)
