@@ -1,28 +1,20 @@
-def str_to_trie(string, d = None, length = None):
-    if length is None:
-        length = len(string)
+def insert(trie: dict, string: str) -> None:
+    for char in string:
+        trie = trie.setdefault(char, {})
     
-    if length <= 0:
-        return { "isValidWord": True }
-    
-    if d is None:
-        d = {}
-    
-    char = string[:1]
-    d[char] = str_to_trie(string[1:], d[char] if char in d else None, length-1)
-    return d
+    trie["end"] = True
 
 
-def strlist_to_trie(ls):
-    d = {}
-    
+def list_to_trie(ls) -> dict:
+    trie = {}
+
     for string in ls:
-        str_to_trie(string, d)
+        insert(trie, string)
     
-    return d
+    return trie
 
 
 if __name__ == "__main__":
     ls = [ "Hello", "Hey", "Hi" ]
     print(f'Using example list "{ls}"')
-    print("Output =>", strlist_to_trie(ls))
+    print("Output =>", list_to_trie(ls))

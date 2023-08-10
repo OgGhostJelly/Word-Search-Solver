@@ -2,7 +2,7 @@ from gridtools import add_v2_v2
 from gridtools import mult_v2_i
 from gridtools import walk_ats
 
-from trietools import strlist_to_trie
+from trietools import list_to_trie
 
 from colorama import Fore, Style
 
@@ -20,7 +20,7 @@ def look_for(grid, words, at, direction):
         return
     
     # If is trie leaf.
-    if "isValidWord" in words[grid[at]]:
+    if "end" in words[grid[at]]:
         return grid[at]
     
     data = look_for(grid, words[grid[at]], add_v2_v2(at, direction), direction)
@@ -53,7 +53,7 @@ def solve(grid, _words, is_diagonal = True):
         words.append(word)
         words.append(''.join(reversed(word)))
     
-    words = strlist_to_trie(words)
+    words = list_to_trie(words)
     
 
     # search
