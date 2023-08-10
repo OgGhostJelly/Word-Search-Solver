@@ -11,18 +11,19 @@ from colorama import Fore, Style
 # If no word is found return None
 
 def look_for(grid, words, at, direction):
+    # If cell doesn't exist.
+    if not at in grid:
+        return
+
+    # If not a valid word.
     if not grid[at] in words:
         return
-
-    shifted_at = add_v2_v2(at, direction)
-
-    if not shifted_at in grid:
-        return
     
+    # If is trie leaf.
     if words[grid[at]] is True:
         return grid[at]
     
-    data = look_for(grid, words[grid[at]], shifted_at, direction)
+    data = look_for(grid, words[grid[at]], add_v2_v2(at, direction), direction)
     return grid[at] + data if data else None
 
 
@@ -60,6 +61,9 @@ def solve(grid, _words, is_diagonal = True):
     matches = []
 
     for at in grid:
+        if not grid[at] in words:
+            continue
+
         for direction in directions:
             match = look_for(grid, words, at, direction)
 
